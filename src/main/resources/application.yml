@@ -1,8 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/socialites
-    username: your-username
-    password: your-password
+    url: jdbc:postgresql://socialites.czyiqc0ga4tn.us-east-1.rds.amazonaws.com:5432/socialites_springboot_development
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
   jpa:
     properties:
       hibernate:
@@ -14,8 +16,8 @@ spring:
       client:
         registration:
           google:
-            client-id: your-client-id
-            client-secret: your-client-secret
+            client-id: ${GOOGLE_ID}
+            client-secret: ${GOOGLE_SECRET}
             redirect-uri: "{baseUrl}/login/oauth2/code/google"
             scope: openid, profile, email
         provider:
@@ -24,6 +26,9 @@ spring:
             token-uri: https://oauth2.googleapis.com/token
             user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
             user-name-attribute: sub
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
 
-flyway:
-  baseline-on-migrate: true
+
