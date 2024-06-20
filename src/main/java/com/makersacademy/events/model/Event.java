@@ -1,13 +1,17 @@
-package com.makersacademy.events.model;
+package com.makersacademy.acebook.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
+@Data
 @Entity
-@Table(name = "events")
+@Table(name = "EVENTS")
 public class Event {
 
     @Id
@@ -24,11 +28,17 @@ public class Event {
 
     @Setter
     @Getter
-    private LocalDateTime scheduledDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date scheduledDate;
 
     @Setter
     @Getter
-    private LocalDateTime createdAt;
+    private String scheduledStartTime;
+
+    @Setter
+    @Getter
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createdAt;
 
     @Setter
     @Getter

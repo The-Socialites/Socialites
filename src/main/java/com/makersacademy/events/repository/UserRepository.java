@@ -1,8 +1,11 @@
-package com.makersacademy.events.repository;
+package com.makersacademy.acebook.repository;
 
-import com.makersacademy.events.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import com.makersacademy.acebook.model.User;
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<User, Long> {
-
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByUsername(String username);
 }

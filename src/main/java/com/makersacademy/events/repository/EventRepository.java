@@ -1,6 +1,6 @@
-package com.makersacademy.events.repository;
+package com.makersacademy.acebook.repository;
 
-import com.makersacademy.events.model.Event;
+import com.makersacademy.acebook.model.Event;
 import org.springframework.data.repository.CrudRepository;
 
 public interface EventRepository extends CrudRepository<Event, Long> {
