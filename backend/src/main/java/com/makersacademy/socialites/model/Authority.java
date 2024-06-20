@@ -1,4 +1,4 @@
-package com.makersacademy.acebook.model;
+package com.makersacademy.socialites.model;
 
 import lombok.Data;
 

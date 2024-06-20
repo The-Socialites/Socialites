@@ -1,4 +1,4 @@
-package com.makersacademy.acebook.model;
+package com.makersacademy.socialites.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

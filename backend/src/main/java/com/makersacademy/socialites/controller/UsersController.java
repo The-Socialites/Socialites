@@ -1,18 +1,17 @@
-package com.makersacademy.acebook.controller;
+package com.makersacademy.socialites.controller;
 
-import com.makersacademy.acebook.model.Authority;
-import com.makersacademy.acebook.model.User;
-import com.makersacademy.acebook.repository.AuthoritiesRepository;
-import com.makersacademy.acebook.repository.UserRepository;
+import com.makersacademy.socialites.model.Authority;
+import com.makersacademy.socialites.model.User;
+import com.makersacademy.socialites.repository.AuthoritiesRepository;
+import com.makersacademy.socialites.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-@Controller
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UsersController {
 
     @Autowired

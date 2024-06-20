@@ -1,4 +1,4 @@
-package com.makersacademy.acebook.model;
+package com.makersacademy.socialites.model;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;

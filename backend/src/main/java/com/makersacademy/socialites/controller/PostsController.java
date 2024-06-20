@@ -1,16 +1,15 @@
-package com.makersacademy.acebook.controller;
+package com.makersacademy.socialites.controller;
 
-import com.makersacademy.acebook.model.Post;
-import com.makersacademy.acebook.repository.PostRepository;
+import com.makersacademy.socialites.model.Post;
+import com.makersacademy.socialites.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.List;
-
-@Controller
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PostsController {
 
     @Autowired
