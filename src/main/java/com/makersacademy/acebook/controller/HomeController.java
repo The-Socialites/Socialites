@@ -2,6 +2,7 @@ package com.makersacademy.acebook.controller;
 
 import com.makersacademy.acebook.model.Event;
 import com.makersacademy.acebook.repository.EventRepository;
+import com.makersacademy.acebook.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,6 +41,12 @@ public class HomeController {
 		Iterable<Event> events = eventRepository.findAll();
 		model.addAttribute("events", events);
 		model.addAttribute("event", new Event());
+		if(keyword != null) {
+			model.addAttribute(events, EventService.findByKeyword(keyword));
+		}
+		else {
+			model.addAttribute(events, EventService.getEvents();
+		}
 		return "home";
 	}
 

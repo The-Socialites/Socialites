@@ -8,6 +8,16 @@
 <p>You have successfully logged in.</p>
 <a href="/logout">Logout</a>
 
+<!--<form th:action="@{/home}" method="get">-->
+<!--    <p>Date: <input type="date" id="filterDate" onchange="filterEventsByDate()" name="keyword" /></p>-->
+<!--    <button type="submit">Find Events</button>-->
+<!--</form>-->
+
+<form th:action="@{/home}" method="get">
+    <p>Date: <input type="text" id="txtSearch"  name="keyword" /></p>
+    <button type="submit">Find Events</button>
+</form>
+
 <ul>
     <li th:each="event : ${events}">
         <div><strong>Title:</strong> <span th:text="${event.title}"></span></div>
