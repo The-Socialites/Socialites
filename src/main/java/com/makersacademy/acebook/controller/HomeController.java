@@ -53,17 +53,19 @@ public class HomeController {
 	@GetMapping("/home/search")
 	public ModelAndView search(Model model,
 							   @AuthenticationPrincipal Object principal,
-							   @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date scheduledStartDate,
-							   @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-mm-dd") Date scheduledEndDate) {
+							   @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date minScheduledDate,
+							   @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-mm-dd") Date maxScheduledDate) {
+		System.out.println("Min Scheduled Date: " + minScheduledDate);
+		System.out.println("Max Scheduled Date: " + maxScheduledDate);
 		List<Event> events;
 
-		if (scheduledStartDate != null && scheduledEndDate != null) {
-			events = eventRepository.findByScheduledDate(scheduledStartDate, scheduledEndDate);
+		if (minScheduledDate != null && maxScheduledDate != null) {
+			events = eventRepository.findByScheduledDateBetween(minScheduledDate, maxScheduledDate);
 		} else {
 			events = eventRepository.findAllByOrderByScheduledDate();
 		}
 
-		ModelAndView modelAndView = new ModelAndView("/home");
+		ModelAndView modelAndView = new ModelAndView("home");
 		modelAndView.addObject("events", events);
 		return modelAndView;
 	}

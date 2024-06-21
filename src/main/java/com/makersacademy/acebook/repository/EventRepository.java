@@ -20,5 +20,5 @@ public interface EventRepository extends CrudRepository<Event, Long> {
     List<Event> findAllByOrderByScheduledDate();
 
     // Method to find events by a specific scheduledDate
-    List<Event> findByScheduledDate(Date scheduledStartDate, Date scheduledEndDate);
+    List<Event> findByScheduledDateBetween(Date minScheduledDate, Date maxScheduledDate);
 }
