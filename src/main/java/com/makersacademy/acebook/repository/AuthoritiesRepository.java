@@ -1,6 +1,6 @@
-package com.makersacademy.events.repository;
+package com.makersacademy.acebook.repository;
 
-import com.makersacademy.events.model.Authority;
+import com.makersacademy.acebook.model.Authority;
 import org.springframework.data.repository.CrudRepository;
 
 public interface AuthoritiesRepository extends CrudRepository<Authority, Long> {

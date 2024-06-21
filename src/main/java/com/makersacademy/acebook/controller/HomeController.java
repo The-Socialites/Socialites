@@ -1,4 +1,4 @@
-package com.makersacademy.events.controller;
+package com.makersacademy.acebook.controller;
 
 import com.makersacademy.acebook.model.Event;
 import com.makersacademy.acebook.repository.EventRepository;

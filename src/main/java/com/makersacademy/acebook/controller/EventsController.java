@@ -4,6 +4,9 @@ import com.makersacademy.acebook.model.Event;
 import com.makersacademy.acebook.model.User;
 import com.makersacademy.acebook.repository.EventRepository;
 import com.makersacademy.acebook.repository.UserRepository;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
 import java.util.Date;
 
 @Controller
@@ -23,10 +27,23 @@ public class EventsController {
     private UserRepository userRepository;
 
     @GetMapping("/events/new")
-    public String addEvent(Model model) {
+    public String addEvent(Model model) throws IOException {
         Iterable<Event> events = eventRepository.findAll();
         model.addAttribute("events", events);
         model.addAttribute("event", new Event());
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://real-time-events-search.p.rapidapi.com/event-details")
+                .get()
+                .addHeader("x-rapidapi-key", "330a9e01edmsh3544e9d43e6ff69p17ee8ejsnfee0e591ba76")
+                .addHeader("x-rapidapi-host", "real-time-events-search.p.rapidapi.com")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        System.out.println(response);
+
         return "events/new";
     }
 

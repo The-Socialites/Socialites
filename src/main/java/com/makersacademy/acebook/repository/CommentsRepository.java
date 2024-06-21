@@ -1,9 +1,8 @@
-package com.makersacademy.events.repository;
+package com.makersacademy.acebook.repository;
 
-import com.makersacademy.events.model.Comment;
+import com.makersacademy.acebook.model.Comment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
 
 public interface CommentsRepository  extends JpaRepository<Comment, Long> {
 }

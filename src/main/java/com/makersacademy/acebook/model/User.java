@@ -1,4 +1,4 @@
-package com.makersacademy.events.model;
+package com.makersacademy.acebook.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

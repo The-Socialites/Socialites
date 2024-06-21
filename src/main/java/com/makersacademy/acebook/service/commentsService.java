@@ -1,7 +1,6 @@
-package com.makersacademy.events.service;
+package com.makersacademy.acebook.service;
 
-import com.makersacademy.events.model.Comment;
-import com.makersacademy.events.repository.CommentsRepository;
+import com.makersacademy.acebook.repository.CommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

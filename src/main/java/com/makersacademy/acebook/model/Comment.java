@@ -1,4 +1,4 @@
-package com.makersacademy.events.model;
+package com.makersacademy.acebook.model;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
