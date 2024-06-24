@@ -4,32 +4,22 @@ import com.makersacademy.acebook.model.User;
 import com.makersacademy.acebook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/api/register")
 public class RegistrationController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
-        return "register";
-    }
-
-    @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user, Model model) {
+    @PostMapping
+    public String registerUser(@RequestBody User user) {
         try {
             userService.save(user);
-            return "redirect:/login";
+            return "User registered successfully";
         } catch (DataIntegrityViolationException e) {
-            model.addAttribute("error", "Username already exists. Please choose another one.");
-            return "register";
+            return "Username already exists. Please choose another one.";
         }
     }
 }

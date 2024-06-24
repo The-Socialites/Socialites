@@ -6,25 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
-@Controller
+@RestController
+@RequestMapping("/api/home")
 public class HomeController {
 
 	@Autowired
 	EventRepository eventRepository;
 
-	@RequestMapping(value = "/")
-	public RedirectView index() {
-		return new RedirectView("/events");
+	@GetMapping("/events")
+	public Iterable<Event> getHomeEvents(@AuthenticationPrincipal Object principal) {
+		return eventRepository.findAll();
 	}
 
-	@GetMapping("/home")
-	public String home(Model model, @AuthenticationPrincipal Object principal) {
+	@GetMapping("/user")
+	public String getCurrentUser(@AuthenticationPrincipal Object principal) {
 		String username;
 
 		if (principal instanceof UserDetails) {
@@ -35,12 +36,6 @@ public class HomeController {
 			username = "User";
 		}
 
-		model.addAttribute("name", username);
-
-		Iterable<Event> events = eventRepository.findAll();
-		model.addAttribute("events", events);
-		model.addAttribute("event", new Event());
-		return "home";
+		return username;
 	}
-
 }
