@@ -185,8 +185,8 @@ export const Navbar1Defaults: Navbar1Props = {
     alt: "Logo image",
   },
   navLinks: [
-    { title: "Link One", url: "#" },
-    { title: "Find Events", url: "#" },
+    { title: "Login test", url: "/login" },
+    { title: "Find Events", url: "/events" },
     { title: "Create Events", url: "#" },
     {
       title: "Link Four",
