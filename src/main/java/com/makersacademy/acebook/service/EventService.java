@@ -1,7 +1,9 @@
 package com.makersacademy.acebook.service;
 
 import com.makersacademy.acebook.model.Event;
+import com.makersacademy.acebook.model.User;
 import com.makersacademy.acebook.repository.EventRepository;
+import com.makersacademy.acebook.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,13 +16,15 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
-
+import java.util.*;
 import javax.transaction.Transactional;
 import java.io.IOException;
 
 @Service
 public class EventService {
 
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private EventRepository eventRepository;
 
@@ -53,6 +57,24 @@ public class EventService {
                 .build();
     }
 
+    public String saveProfilePicture(MultipartFile image) throws IOException {
+        String filename = "profile_pictures/" + System.currentTimeMillis() + "_" + image.getOriginalFilename();
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(filename)
+                .build();
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("Content-Type", image.getContentType());
+        PutObjectResponse response = s3Client.putObject(putObjectRequest,
+                software.amazon.awssdk.core.sync.RequestBody.fromBytes(image.getBytes()));
+        GetObjectPresignRequest getObjectPresignRequest = GetObjectPresignRequest.builder()
+                .getObjectRequest(r -> r.bucket(bucketName).key(filename))
+                .signatureDuration(java.time.Duration.ofDays(7))
+                .build();
+        return s3Presigner.presignGetObject(getObjectPresignRequest).url().toString();
+    }
+
+
     @Transactional
     public void savePost(Event event, MultipartFile image) throws IOException {
         if (!image.isEmpty()) {
@@ -61,5 +83,13 @@ public class EventService {
         }
         eventRepository.save(event);
     }
+
+//    public void saveProfilePicture(User user, MultipartFile image) throws IOException {
+//        if (!image.isEmpty()) {
+//            String imageUrl = s3Service.saveImage(image);
+//            user.setProfilePictureUrl(imageUrl);
+//        }
+//        userRepository.save(user);
+//    }
 }
 

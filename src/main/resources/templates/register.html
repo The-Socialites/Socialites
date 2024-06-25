@@ -12,7 +12,7 @@
 
 
 <div class="container">
-    <form th:action="@{/register}" method="post" th:object="${user}" class="form-signup">
+    <form th:action="@{/register}" method="post" th:object="${user}" class="form-signup" enctype="multipart/form-data">
         <h2>Sign Up</h2>
         <div class="form-group">
             <label for="username">Username:</label>
@@ -25,6 +25,10 @@
         <div class="form-group">
             <label for="password">Password:</label>
             <input type="password" id="password" th:field="*{password}" placeholder="Enter password" required>
+        </div>
+        <div class="form-group">
+            <label for="profilePictureUrl">Profile Picture:</label>
+            <input type="file" id="profilePictureUrl" th:field="*{profilePictureUrl}" placeholder="Select a file">
         </div>
         <div class="form-group">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

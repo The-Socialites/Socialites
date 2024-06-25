@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 
@@ -44,6 +45,10 @@ public class User {
     @Setter
     private String city;
 
+    @Getter
+    @Transient
+    private MultipartFile profilePicture;
+
     public User() {
         this.enabled = TRUE;
     }
@@ -59,4 +64,7 @@ public class User {
         this.password = password;
         this.enabled = enabled;
     }
+
+    public void setProfilePicture(MultipartFile profilePicture) { this.profilePicture = profilePicture; }
+
 }
