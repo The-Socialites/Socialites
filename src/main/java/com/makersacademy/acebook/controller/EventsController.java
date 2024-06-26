@@ -93,6 +93,7 @@ public class EventsController {
         }
     }
 
+    
     @PostMapping("/events/details/{eventId}/comments/new")
     public RedirectView createComment(@PathVariable Long eventId, Comment comment, Authentication authentication) {
         commentService.save(comment, eventId, authentication);
