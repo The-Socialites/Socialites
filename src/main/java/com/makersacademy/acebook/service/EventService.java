@@ -57,7 +57,7 @@ public class EventService {
                 .build();
     }
 
-    public String saveProfilePicture(MultipartFile image) throws IOException {
+    public String saveProfilePicture(User user, MultipartFile image) throws IOException {
         String filename = "profile_pictures/" + System.currentTimeMillis() + "_" + image.getOriginalFilename();
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucketName)
