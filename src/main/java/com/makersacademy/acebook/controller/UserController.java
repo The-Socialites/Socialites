@@ -45,7 +45,9 @@ public class UserController {
             model.addAttribute("user", user);
 //            model.addAttribute("isAuthenticated", isAuthenticated);
 
-            return "account";
+
+            return "/account";
+
         } else {
             return "redirect:/login";
         }
