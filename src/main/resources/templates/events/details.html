@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Event Details</title>
+    <link rel="stylesheet" th:href="@{/styles/dark.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
 </head>
-<body>
+<body th:class="${theme}">
 <h1>Event Details</h1>
     <div>
         <strong>Title:</strong> <span th:text="${event.title}"></span>

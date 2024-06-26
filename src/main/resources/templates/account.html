@@ -4,8 +4,12 @@
     <title>Account Page</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/styles/dark.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
 </head>
-<body>
+<body body th:class="${theme}">
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container mx-auto p-8">
     <h1 class="text-4xl font-bold mb-8 text-center">Account Information</h1>
