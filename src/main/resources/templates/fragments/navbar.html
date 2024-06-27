@@ -17,6 +17,9 @@
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
         }
+        .hidden-mobile {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -25,13 +28,13 @@
         <div class="size-full lg:flex lg:items-center lg:justify-between">
             <div class="flex min-h-16 items-center justify-between px-[5%] md:min-h-18 lg:min-h-full lg:px-0">
                 <a href="/"><img src="/images/logo.png" alt="Logo image" class="w-36 h-auto" /></a>
-                <button class="-mr-2 flex size-12 flex-col items-center justify-center lg:hidden">
+                <button id="menu-toggle" class="-mr-2 flex size-12 flex-col items-center justify-center lg:hidden">
                     <span class="my-[3px] h-0.5 w-6 bg-black"></span>
                     <span class="my-[3px] h-0.5 w-6 bg-black"></span>
                     <span class="my-[3px] h-0.5 w-6 bg-black"></span>
                 </button>
             </div>
-            <div class="overflow-hidden px-[5%] lg:flex lg:items-center lg:px-0 lg:[--height-closed:auto] lg:[--height-open:auto]" style="height: var(--height-closed, 0)">
+            <div id="menu" class="hidden-mobile overflow-hidden px-[5%] lg:flex lg:items-center lg:px-0 lg:[--height-closed:auto] lg:[--height-open:auto]" style="height: var(--height-closed, 0)">
                 <div class="first:pt-4 lg:first:pt-0">
                     <a href="/events/new" class="block py-3 text-md focus-visible:outline-none lg:px-4 lg:py-2 lg:text-base">Create event</a>
                 </div>
@@ -64,5 +67,16 @@
         </div>
     </nav>
 </div>
+
+<script>
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+        var menu = document.getElementById('menu');
+        if (menu.classList.contains('hidden-mobile')) {
+            menu.classList.remove('hidden-mobile');
+        } else {
+            menu.classList.add('hidden-mobile');
+        }
+    });
+</script>
 </body>
 </html>
