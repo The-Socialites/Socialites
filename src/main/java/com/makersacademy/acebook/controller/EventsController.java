@@ -11,6 +11,7 @@ import com.makersacademy.acebook.service.EventService;
 import com.makersacademy.acebook.service.S3Service;
 import com.makersacademy.acebook.service.ThirdPartyEventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,9 @@ import java.util.Optional;
 
 @Controller
 public class EventsController {
+
+    @Value("${google.maps.api.key}")
+    private String googleMapsApiKey;
 
     @Autowired
     EventRepository eventRepository;
@@ -86,6 +90,8 @@ public class EventsController {
         if (optionalEvent.isPresent()) {
             Event event = optionalEvent.get();
             model.addAttribute("event", event);
+            model.addAttribute("googleMapsApiKey", googleMapsApiKey);
+
             return "events/details";
         } else {
             // Handle the case where the event is not found

@@ -6,7 +6,6 @@
     <link rel="stylesheet" th:href="@{/styles/dark.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         #map {
             height: 400px;
@@ -17,7 +16,11 @@
             color: white;
         }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfEW3l1hwuJDDZE_RWutmP39EBMuT8rjE" async defer></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var googleMapsApiKey = /*[[${googleMapsApiKey}]]*/ 'YOUR_FALLBACK_KEY';
+        /*]]>*/
+    </script>
 </head>
 <body th:class="${theme}" class="bg-gray-900 text-white">
 <div class="container mx-auto p-6">
@@ -45,6 +48,18 @@
         <strong class="text-xl">Host:</strong> <span th:text="${event.user.username}" class="text-lg"></span>
     </div>
 </div>
+<form action="#" th:action="@{/events/details/{id}/comments/new(id=${{event.id}})}" th:object="${comment}" method="post">
+    <p>Comment: <input type="text" th:field="*{content}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+<h5 th:text="${comments.isEmpty()}? 'No comments yet' : 'Comments'"></h5>
+<ul>
+    <li th:each="comment : ${comments}">
+        <p th:text="${comment.user.username}"></p>
+        <p th:text="${comment.formattedCreatedAt}"></p>
+        <p th:text="${comment.content}"></p>
+    </li>
+</ul>
 
 <script>
     function initMap() {
@@ -73,7 +88,13 @@
     }
 
     // Ensure the map initializes only when the document is fully loaded
-    window.addEventListener('load', initMap);
+    window.addEventListener('load', function() {
+        var script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap`;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    });
 </script>
 </body>
 </html>
