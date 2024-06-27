@@ -3,33 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>Event Details</title>
+    <link rel="stylesheet" th:href="@{/styles/dark.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+    </style>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var googleMapsApiKey = /*[[${googleMapsApiKey}]]*/ 'YOUR_FALLBACK_KEY';
+        /*]]>*/
+    </script>
 </head>
-<body>
-<h1>Event Details</h1>
-    <div>
-        <strong>Title:</strong> <span th:text="${event.title}"></span>
+<body th:class="${theme}" class="bg-gray-900 text-white">
+<div class="container mx-auto p-6">
+    <h1 class="text-4xl font-bold mb-4">Event Details</h1>
+    <div class="mb-2">
+        <strong class="text-xl">Title:</strong> <span th:text="${event.title}" class="text-lg"></span>
     </div>
-    <div>
-        <strong>Description:</strong> <span th:text="${event.description}"></span>
+    <div class="mb-2">
+        <strong class="text-xl">Description:</strong> <span th:text="${event.description}" class="text-lg"></span>
     </div>
-    <div>
-        <strong>Date:</strong> <span th:text="${#dates.format(event.scheduledDate, 'yyyy-MM-dd')}"></span>
+    <div class="mb-2">
+        <strong class="text-xl">Date:</strong> <span th:text="${#dates.format(event.scheduledDate, 'yyyy-MM-dd')}" class="text-lg"></span>
     </div>
-    <div>
-        <strong>Start time:</strong> <span th:text="${event.scheduledStartTime}"></span>
+    <div class="mb-2">
+        <strong class="text-xl">Start time:</strong> <span th:text="${event.scheduledStartTime}" class="text-lg"></span>
     </div>
-    <div>
-        <strong>End time:</strong> <span th:text="${event.scheduledEndTime}"></span>
+    <div class="mb-2">
+        <strong class="text-xl">End time:</strong> <span th:text="${event.scheduledEndTime}" class="text-lg"></span>
     </div>
-    <div>
-        <strong>Location:</strong> <span th:text="${event.location}"></span>
+    <div class="mb-2">
+        <strong class="text-xl">Location:</strong> <span id="event-location" th:text="${event.location}" class="text-lg"></span>
     </div>
-    <div>
-        <strong>Host:</strong> <span th:text="${event.user.username}"></span>
+    <div id="map" class="my-4 border-2 border-gray-700 rounded"></div>
+    <div class="mb-2">
+        <strong class="text-xl">Host:</strong> <span th:text="${event.user.username}" class="text-lg"></span>
     </div>
+</div>
+<form action="#" th:action="@{/events/details/{id}/comments/new(id=${{event.id}})}" th:object="${comment}" method="post">
+    <p>Comment: <input type="text" th:field="*{content}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+<h5 th:text="${comments.isEmpty()}? 'No comments yet' : 'Comments'"></h5>
+<ul>
+    <li th:each="comment : ${comments}">
+        <p th:text="${comment.user.username}"></p>
+        <p th:text="${comment.formattedCreatedAt}"></p>
+        <p th:text="${comment.content}"></p>
+    </li>
+</ul>
 
+<script>
+    function initMap() {
+        var geocoder = new google.maps.Geocoder();
+        var location = document.getElementById('event-location').innerText.trim(); // Ensure no leading/trailing spaces
 
+        if (!location) {
+            console.error('Location is empty.');
+            return;
+        }
 
+        geocoder.geocode({'address': location}, function(results, status) {
+            if (status === 'OK') {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 15,
+                    center: results[0].geometry.location
+                });
+                var marker = new google.maps.Marker({
+                    position: results[0].geometry.location,
+                    map: map
+                });
+            } else {
+                console.error('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
 
+    // Ensure the map initializes only when the document is fully loaded
+    window.addEventListener('load', function() {
+        var script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap`;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    });
+</script>
 </body>
 </html>
