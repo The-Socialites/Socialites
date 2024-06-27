@@ -36,7 +36,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0 4rem; /* Add horizontal padding */
+            padding: 0 4rem;
         }
         .step-check {
             display: none;
@@ -58,7 +58,7 @@
             color: #FFF;
         }
         .step {
-            font-size: 1rem; /* Increase font size for step numbers */
+            font-size: 1rem;
         }
         .image-container img {
             object-fit: cover;
@@ -73,9 +73,7 @@
 <body>
 <div th:fragment="navbar" th:replace="fragments/navbar :: navbar"></div>
 <div class="flex h-screen">
-    <!-- Form Container -->
     <div class="w-1/2 flex flex-col h-full">
-        <!-- Step Indicator -->
         <div class="mb-8 px-8 pt-8 progress-container">
             <div class="flex items-center justify-between w-3/4">
                 <div class="step-container">
@@ -88,35 +86,35 @@
             </div>
         </div>
         <!-- Form Steps -->
-        <form id="multi-step-form" class="flex-1 flex flex-col justify-center px-16 pb-8"> <!-- Added horizontal padding -->
+        <form th:action="@{/events/new}" th:object="${event}" method="post" enctype="multipart/form-data" id="multi-step-form" class="flex-1 flex flex-col justify-center px-16 pb-8">
             <!-- Step 1 -->
             <div class="step-content" id="step-1">
 
                 <!-- Title -->
                 <div class="mb-8">
                     <label for="title" class="block text-lg font-medium text-gray-700">Title</label>
-                    <input type="text" id="title" name="title" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                    <input type="text" th:field="*{title}" id="title" name="title" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
                 </div>
 
                 <!-- Description -->
                 <div class="mb-8">
                     <label for="description" class="block text-lg font-medium text-gray-700">Description</label>
-                    <textarea id="description" name="description" rows="3" class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
+                    <textarea th:field="*{description}" id="description" name="description" rows="3" class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
                 </div>
 
-                <!-- Date and time -->
+                <!-- Date and Time -->
                 <div class="grid grid-cols-3 gap-4 mb-8">
                     <div class="col-span-1">
                         <label for="date" class="block text-lg font-medium text-gray-700">Date</label>
-                        <input type="date" id="date" name="date" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                        <input type="date" th:field="*{scheduledDate}" id="date" name="date" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
                     </div>
                     <div class="col-span-1">
                         <label for="start-time" class="block text-lg font-medium text-gray-700">Start time</label>
-                        <input type="time" id="start-time" name="start-time" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                        <input type="time" th:field="*{scheduledStartTime}" id="start-time" name="start-time" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
                     </div>
                     <div class="col-span-1">
                         <label for="end-time" class="block text-lg font-medium text-gray-700">End time</label>
-                        <input type="time" id="end-time" name="end-time" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                        <input type="time" th:field="*{scheduledEndTime}" id="end-time" name="end-time" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
                     </div>
                 </div>
 
@@ -131,7 +129,7 @@
                             <div class="mt-4 flex text-sm leading-6 text-gray-600">
                                 <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                     <span>Upload a file</span>
-                                    <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                    <input id="file-upload" name="image" type="file" class="sr-only">
                                 </label>
                                 <p class="pl-1">or drag and drop</p>
                             </div>
@@ -139,7 +137,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="flex justify-between">
                     <button type="button" class="px-4 py-2 bg-gray-300 text-gray-700 font-bold rounded-md" disabled>Cancel</button>
                     <button type="button" class="px-4 py-2 bg-blue-500 text-white font-bold rounded-md" onclick="nextStep(1)">Next</button>
@@ -152,11 +149,11 @@
                 <p class="mb-6">Please provide the location details for your event.</p>
                 <div class="mb-4">
                     <label for="location" class="block text-lg font-medium text-gray-700">Location</label>
-                    <input type="text" id="location" name="location" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                    <input type="text" th:field="*{location}" id="location" name="location" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
                 </div>
                 <div class="flex justify-between">
                     <button type="button" class="px-4 py-2 bg-gray-300 text-gray-700 font-bold rounded-md" onclick="prevStep(1)">Back</button>
-                    <button type="button" class="px-4 py-2 bg-blue-500 text-white font-bold rounded-md" onclick="nextStep(2)">Next</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-bold rounded-md" onclick="nextStep(2)">Next</button>
                 </div>
             </div>
 
@@ -191,7 +188,7 @@
         steps.forEach((step, index) => {
             if (index < currentStep) {
                 step.classList.add('completed');
-                step.innerHTML = '&#10003;'; // check mark
+                step.innerHTML = '&#10003;';
                 if (lines[index]) lines[index].classList.add('completed');
             } else {
                 step.classList.remove('completed');
@@ -205,7 +202,6 @@
             }
         });
 
-        // Change image based on step
         const stepImage = document.getElementById('step-image');
         if (currentStep === 2) {
             stepImage.src = '/assets/Adobe_Preview.jpeg';
@@ -438,7 +434,6 @@
                     frame = undefined;
                 });
 
-                // Stop confetti after 7 seconds
                 setTimeout(function() {
                     clearTimeout(timer);
                     timer = undefined;
