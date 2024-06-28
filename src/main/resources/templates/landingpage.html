@@ -6,7 +6,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" th:href="@{/styles/dark.css}">
+<style>
+    .event-image {
+    width: 100%;  /* Adjust as needed */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensures the image covers the area, can also use 'contain' or 'fill' */
 
+}
+</style>
 
 </head>
 <body th:class="${theme}">
@@ -107,9 +114,10 @@
             <li th:each="event : ${events}" class="mb-4 p-4 bg-white rounded-lg shadow-md">
                 <a th:href="@{/events/details/{eventId}(eventId=${event.id})}">
                     <div class="text-lg">
-                        <img th:src="${event.eventImageUrl}" th:if="${event.eventImageUrl}" alt="Event Image" class="mt-2 rounded-lg w-full h-auto"/>
-                        <img th:src="@{/images/default_image.jpeg}" th:unless="${event.eventImageUrl}" alt="Default Event Image" class="mt-2 rounded-lg w-full h-auto"/>
+                        <img th:src="${event.eventImageUrl}" th:if="${event.eventImageUrl}" alt="Event Image" class="event-image mt-2 rounded-lg"/>
+                        <img th:src="@{/images/default_image.jpeg}" th:unless="${event.eventImageUrl}" alt="Default Event Image" class="event-image mt-2 rounded-lg"/>
                     </div>
+
                     <div class="text-lg text-gray-700"><strong>Title:</strong> <span th:text="${event.title}"></span></div>
                     <div class="text-lg text-gray-700"><strong>Description:</strong> <span th:text="${event.description}"></span></div>
                     <div class="text-lg text-gray-700"><strong>Date:</strong> <span th:text="${#dates.format(event.scheduledDate, 'yyyy-MM-dd')}"></span></div>
