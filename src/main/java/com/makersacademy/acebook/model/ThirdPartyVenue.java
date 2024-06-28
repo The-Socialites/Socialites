@@ -11,4 +11,5 @@ import java.util.HashMap;
 
 public class ThirdPartyVenue {
     private String full_address;
+
 }
