@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/styles/dark.css}">
+
+    <style>
+        :root {
+            --background-color: #ffffff;
+            --text-color: #000000;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .dark-mode {
+            --background-color: #000000;
+            --text-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="dark-mode">
+    <!-- Dark Mode Toggle Button -->
+    <button id="theme-toggle" class="p-2 bg-gray-200 dark:bg-gray-800 rounded ml-4 text-gray-800 dark:text-gray-200">
+        <i id="theme-icon" class="fas fa-moon"></i>
+    </button>
+
+    <!-- Dark Mode Script -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        const updateIcon = () => {
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        };
+
+        toggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const theme = document.body.classList.contains('dark-mode') ? 'dark-mode' : '';
+            document.cookie = 'theme=' + theme + ';path=/';
+            updateIcon();
+        });
+
+        // Load the theme from cookies
+        document.addEventListener('DOMContentLoaded', () => {
+            const match = document.cookie.match(new RegExp('(^| )theme=([^;]+)'));
+            if (match && match[2] === 'dark-mode') {
+                document.body.classList.add('dark-mode');
+            }
+            updateIcon();
+        });
+        /*]]>*/
+    </script>
+
+</div>
+</body>
+</html>

@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
+
+
 @Configuration
 public class SecurityConfig {
 
@@ -30,13 +32,13 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .antMatchers("/", "/login", "/register","/images/**", "/users","/error/**", "/styles/**", "/search", "/events", "/events/attend/**", "/oauth2/**", "/assets/**", "/events/details/**").permitAll()
+                                .antMatchers("/", "/login", "/register","/images/**", "/users","/error/**", "/styles/**", "/search", "/events", "/oauth2/**", "/assets/**","/events/details/**","/events/third-party-events").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login")
-                                .defaultSuccessUrl("/ ", true)
+                                .defaultSuccessUrl("/", true)
                                 .permitAll()
                 )
                 .oauth2Login(oauth2Login ->
@@ -45,7 +47,7 @@ public class SecurityConfig {
                                 .userInfoEndpoint(userInfoEndpoint ->
                                         userInfoEndpoint.userService(customOAuth2UserService)
                                 )
-                                .defaultSuccessUrl("/ ", true)
+                                .defaultSuccessUrl("/", true)
                 )
                 .logout(logout ->
                         logout
