@@ -111,11 +111,11 @@
                         <img th:src="@{/images/default_image.jpeg}" th:unless="${event.eventImageUrl}" alt="Default Event Image" class="mt-2 rounded-lg w-full h-auto"/>
                     </div>
                     <div class="text-lg text-gray-700"><strong>Title:</strong> <span th:text="${event.title}"></span></div>
-                    <div class="text-sm text-gray-700"><strong>Description:</strong> <span th:text="${event.description}"></span></div>
-                    <div class="text-sm text-gray-700"><strong>Date:</strong> <span th:text="${#dates.format(event.scheduledDate, 'yyyy-MM-dd')}"></span></div>
-                    <div class="text-sm text-gray-700"><strong>Time:</strong> <span th:text="${event.scheduledStartTime}"></span></div>
-                    <div class="text-sm text-gray-700"><strong>Location:</strong> <span th:text="${event.location}"></span></div>
-                    <div class="text-sm text-gray-700"><strong>Organiser:</strong> <span th:text="${event.user.username}"></span></div>
+                    <div class="text-lg text-gray-700"><strong>Description:</strong> <span th:text="${event.description}"></span></div>
+                    <div class="text-lg text-gray-700"><strong>Date:</strong> <span th:text="${#dates.format(event.scheduledDate, 'yyyy-MM-dd')}"></span></div>
+                    <div class="text-lg text-gray-700"><strong>Time:</strong> <span th:text="${event.scheduledStartTime}"></span></div>
+                    <div class="text-lg text-gray-700"><strong>Location:</strong> <span th:text="${event.location}"></span></div>
+                    <div class="text-lg text-gray-700"><strong>Organiser:</strong> <span th:text="${event.user.username}"></span></div>
                 </a>
                 <form th:if="${!event.userAttending}" th:action="@{/events/attend/{id}(id=${event.id})}" method="post">
                     <button type="submit" class="mt-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-blue-700">
